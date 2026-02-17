@@ -60,3 +60,21 @@ export async function getCurrentUser() {
 
   return user;
 }
+
+/**
+ * Get user ID from either auth session or demo cookie
+ * Use this in API routes that need to support both auth and demo mode
+ */
+export async function getCurrentUserId(): Promise<string | null> {
+  const cookieStore = await cookies();
+
+  // Check demo mode first
+  if (cookieStore.get('demo-session')?.value === 'true') {
+    return cookieStore.get('demo-user-id')?.value || null;
+  }
+
+  // Otherwise check real auth session
+  const { auth } = await import('@/auth');
+  const session = await auth();
+  return session?.user?.id || null;
+}

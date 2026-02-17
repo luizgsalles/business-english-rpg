@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { GrammarDrill } from '@/components/exercises/GrammarDrill';
 import Link from 'next/link';
 
@@ -206,28 +206,60 @@ const getExercise = (id: string) => {
 
 export default function ExercisePage() {
   const params = useParams();
-  const router = useRouter();
   const exerciseId = params.id as string;
   const exercise = getExercise(exerciseId);
 
   const [completed, setCompleted] = useState(false);
   const [results, setResults] = useState<{ questionId: string; correct: boolean; userAnswer: string }[]>([]);
+  const [xpEarned, setXpEarned] = useState(0);
+  const [leveledUp, setLeveledUp] = useState(false);
+  const [startTime] = useState(() => Date.now());
 
-  const handleComplete = (exerciseResults: { questionId: string; correct: boolean; userAnswer: string }[]) => {
+  const handleComplete = async (exerciseResults: { questionId: string; correct: boolean; userAnswer: string }[]) => {
     setResults(exerciseResults);
     setCompleted(true);
-    // TODO: Submit results to API to update XP and stats
+
+    const correctCount = exerciseResults.filter((r) => r.correct).length;
+    const accuracy = Math.round((correctCount / exerciseResults.length) * 100);
+    const timeSpentSeconds = Math.round((Date.now() - startTime) / 1000);
+
+    try {
+      const res = await fetch('/api/progress/record', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          exerciseId: exerciseId,
+          exerciseType: exercise.type,
+          accuracy,
+          timeSpentSeconds,
+          questionsTotal: exerciseResults.length,
+          questionsCorrect: correctCount,
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setXpEarned(data.xpEarned);
+        setLeveledUp(data.leveledUp);
+      }
+    } catch (e) {
+      // Non-blocking: don't break the UI if API fails
+    }
   };
 
   const correctCount = results.filter((r) => r.correct).length;
   const accuracy = results.length > 0 ? Math.round((correctCount / results.length) * 100) : 0;
-  const xpEarned = Math.round(exercise.xpReward * (accuracy / 100));
 
   if (completed) {
     return (
       <div className="min-h-screen bg-gradient-mesh flex items-center justify-center px-4">
         <div className="max-w-md w-full text-center">
           <div className="card p-8">
+            {leveledUp && (
+              <div className="bg-gradient-to-r from-yellow-400 to-orange-400 text-white text-sm font-bold px-4 py-2 rounded-full mb-4 inline-block animate-bounce">
+                🎉 LEVEL UP!
+              </div>
+            )}
             <div className="text-6xl mb-4">
               {accuracy >= 80 ? '🏆' : accuracy >= 60 ? '⭐' : '📚'}
             </div>
