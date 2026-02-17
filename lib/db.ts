@@ -12,11 +12,8 @@ import * as schema from '@/db/schema';
 
 // Next.js automatically loads .env.local, no need for dotenv here
 // Use POSTGRES_URL (postgres.js doesn't support pgbouncer parameter)
-const connectionString = process.env.POSTGRES_URL!;
-
-if (!connectionString) {
-  throw new Error('POSTGRES_URL environment variable is required');
-}
+// Fallback prevents module-load crash during next build (actual queries fail at runtime if not set)
+const connectionString = process.env.POSTGRES_URL ?? 'postgresql://localhost/placeholder_build_only';
 
 const client = postgres(connectionString, { prepare: false });
 
