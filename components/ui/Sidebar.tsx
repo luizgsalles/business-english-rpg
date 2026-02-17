@@ -37,7 +37,7 @@ export function Sidebar({ userName, userImage, userLevel = 1, totalXP = 0 }: Sid
           <Zap className="w-4 h-4 text-white" />
         </div>
         <span className="font-bold text-slate-900 text-sm leading-tight">
-          Business<br />English RPG
+          Road to<br />Fluency
         </span>
       </div>
 

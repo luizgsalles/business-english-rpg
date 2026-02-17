@@ -14,13 +14,13 @@ import { auth } from '@/auth';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'Business English RPG - Level Up Your Professional English',
-  description: 'Learn Business English through gamified exercises with AI-powered corrections, spaced repetition, and RPG progression.',
-  keywords: ['business english', 'english learning', 'gamification', 'spaced repetition', 'ai corrections'],
-  authors: [{ name: 'AIOS Team' }],
+  title: 'Road to Fluency - Business English',
+  description: 'Aprenda inglês de negócios com exercícios inteligentes, correção por IA e acompanhamento de progresso.',
+  keywords: ['business english', 'inglês de negócios', 'aprender inglês', 'fluência', 'spaced repetition'],
+  authors: [{ name: 'Road to Fluency' }],
   openGraph: {
-    title: 'Business English RPG',
-    description: 'Level up your professional English skills',
+    title: 'Road to Fluency - Business English',
+    description: 'Aprenda inglês de negócios com exercícios inteligentes e acompanhamento de progresso.',
     type: 'website',
   },
 };
