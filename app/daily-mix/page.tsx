@@ -106,8 +106,8 @@ export default async function DailyMixPage() {
                 <div className="text-xl font-bold">{totalTime} min</div>
               </div>
               <div className="text-right">
-                <div className="text-sm text-muted-foreground">XP Total</div>
-                <div className="text-xl font-bold text-gradient">+{totalXP} XP</div>
+                <div className="text-sm text-muted-foreground">Pontos</div>
+                <div className="text-xl font-bold text-gradient">+{totalXP}</div>
               </div>
             </div>
           </div>
@@ -145,15 +145,15 @@ export default async function DailyMixPage() {
 
         {/* Complete All Button */}
         <div className="mt-12 text-center">
-          <button className="btn-primary btn-lg">
+          <Link href={`/exercise/${dailyMix[0].id}`} className="btn-primary btn-lg">
             <span>🚀</span>
             <span>Começar Daily Mix</span>
             <span className="badge bg-white/20 text-white">
               {dailyMix.length} exercícios
             </span>
-          </button>
+          </Link>
           <p className="text-sm text-muted-foreground mt-4">
-            Complete todos para ganhar +{totalXP} XP extra de bônus!
+            Complete todos para ganhar +{totalXP} pontos de bônus!
           </p>
         </div>
       </div>
@@ -226,11 +226,11 @@ function ExerciseCard({
               </svg>
               {exercise.estimatedTime} min
             </span>
-            <span className="inline-flex items-center gap-1 font-semibold text-gradient">
+            <span className="inline-flex items-center gap-1 font-semibold text-primary-600">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
-              +{exercise.xpReward} XP
+              +{exercise.xpReward} pontos
             </span>
           </div>
         </div>

@@ -256,30 +256,30 @@ export default function ExercisePage() {
         <div className="max-w-md w-full text-center">
           <div className="card p-8">
             {leveledUp && (
-              <div className="bg-gradient-to-r from-yellow-400 to-orange-400 text-white text-sm font-bold px-4 py-2 rounded-full mb-4 inline-block animate-bounce">
-                🎉 LEVEL UP!
+              <div className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white text-sm font-bold px-4 py-2 rounded-full mb-4 inline-block">
+                Subiu de nível!
               </div>
             )}
             <div className="text-6xl mb-4">
-              {accuracy >= 80 ? '🏆' : accuracy >= 60 ? '⭐' : '📚'}
+              {accuracy >= 80 ? '✅' : accuracy >= 60 ? '👍' : '📖'}
             </div>
             <h1 className="text-3xl font-bold mb-2">
-              {accuracy >= 80 ? 'Excellent!' : accuracy >= 60 ? 'Good Job!' : 'Keep Practicing!'}
+              {accuracy >= 80 ? 'Excelente!' : accuracy >= 60 ? 'Bom trabalho!' : 'Continue praticando!'}
             </h1>
             <p className="text-gray-600 mb-6">{exercise.title}</p>
 
             <div className="grid grid-cols-3 gap-4 mb-8">
-              <div className="bg-purple-50 rounded-xl p-4">
-                <div className="text-2xl font-bold text-purple-600">{accuracy}%</div>
-                <div className="text-sm text-gray-600">Accuracy</div>
+              <div className="bg-primary-50 rounded-xl p-4">
+                <div className="text-2xl font-bold text-primary-600">{accuracy}%</div>
+                <div className="text-sm text-gray-600">Acerto</div>
               </div>
-              <div className="bg-green-50 rounded-xl p-4">
-                <div className="text-2xl font-bold text-green-600">{correctCount}/{results.length}</div>
-                <div className="text-sm text-gray-600">Correct</div>
+              <div className="bg-success-50 rounded-xl p-4">
+                <div className="text-2xl font-bold text-success-600">{correctCount}/{results.length}</div>
+                <div className="text-sm text-gray-600">Corretas</div>
               </div>
-              <div className="bg-amber-50 rounded-xl p-4">
-                <div className="text-2xl font-bold text-amber-600">+{xpEarned}</div>
-                <div className="text-sm text-gray-600">XP Earned</div>
+              <div className="bg-slate-50 rounded-xl p-4">
+                <div className="text-2xl font-bold text-slate-600">+{xpEarned}</div>
+                <div className="text-sm text-gray-600">Pontos</div>
               </div>
             </div>
 
