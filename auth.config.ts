@@ -44,8 +44,8 @@ export const authConfig = {
     // EMAIL MAGIC LINK PROVIDER (Resend)
     // ============================================================================
     Resend({
-      apiKey: process.env.RESEND_API_KEY!,
-      from: 'noreply@yourdomain.com', // TODO: Update with your domain
+      apiKey: process.env.RESEND_API_KEY || 'resend-placeholder',
+      from: process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',
       name: 'Business English RPG',
     }),
   ],
