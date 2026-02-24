@@ -66,6 +66,31 @@ export async function POST(request: NextRequest) {
     const newOverallLevel = calculateOverallLevel(newTotalXP, newSkillLevels);
     const leveledUp = newOverallLevel > user.overallLevel;
 
+    // ── Streak calculation ────────────────────────────────────────────────────
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    let newStreak = user.currentStreak;
+    const lastActive = user.lastActiveDate ? new Date(user.lastActiveDate) : null;
+    if (lastActive) lastActive.setHours(0, 0, 0, 0);
+
+    const lastActiveMs = lastActive?.getTime() ?? 0;
+    const todayMs = todayStart.getTime();
+    const yesterdayMs = todayMs - 86400000;
+
+    if (lastActiveMs === todayMs) {
+      // Already studied today — keep streak as-is
+      newStreak = user.currentStreak;
+    } else if (lastActiveMs === yesterdayMs) {
+      // Studied yesterday — extend streak
+      newStreak = user.currentStreak + 1;
+    } else {
+      // Gap of 2+ days — reset streak
+      newStreak = 1;
+    }
+
+    const newLongestStreak = Math.max(user.longestStreak, newStreak);
+
     // Update user in DB
     await db.update(users).set({
       totalXP: newTotalXP,
@@ -82,6 +107,9 @@ export async function POST(request: NextRequest) {
       speakingLevel: newSkillLevels.speaking,
       readingLevel: newSkillLevels.reading,
       writingLevel: newSkillLevels.writing,
+      currentStreak: newStreak,
+      longestStreak: newLongestStreak,
+      lastActiveDate: todayStart,
       updatedAt: new Date(),
     }).where(eq(users.id, userId));
 

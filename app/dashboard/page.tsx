@@ -15,6 +15,7 @@ import { users, userProgress } from '@/db/schema';
 import { eq, and, gte, sql } from 'drizzle-orm';
 import { getXPProgress } from '@/lib/gamification/xp-system';
 import { Sidebar } from '@/components/ui/Sidebar';
+import { AICoach } from '@/components/dashboard/AICoach';
 import { MetricCard } from '@/components/ui/MetricCard';
 import { ChartCard } from '@/components/ui/ChartCard';
 import { DashboardGrid } from '@/components/ui/DashboardGrid';
@@ -259,6 +260,9 @@ export default async function DashboardPage() {
                   ))}
                 </div>
               </div>
+
+              {/* AI Coach */}
+              <AICoach />
 
               {/* Summary card */}
               <div className="bg-gradient-to-br from-primary-500 to-secondary-600 rounded-xl p-5 text-white">

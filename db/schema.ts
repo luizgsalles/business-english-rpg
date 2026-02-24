@@ -194,7 +194,7 @@ export const achievements = pgTable('achievements', {
   category: varchar('category', { length: 20 }).notNull(), // streak, level, exercises, mastery, social
 
   // Unlock criteria
-  criteriaType: varchar('criteria_type', { length: 20 }).notNull(), // streak_days, total_xp, exercises_completed, skill_level, etc.
+  criteriaType: varchar('criteria_type', { length: 30 }).notNull(), // streak_days, total_xp, exercises_completed, skill_level, etc.
   criteriaValue: integer('criteria_value').notNull(),
 
   // Rewards

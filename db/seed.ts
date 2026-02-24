@@ -6,6 +6,11 @@
 // Based on: Task 7 (Database Setup)
 // ============================================================================
 
+// IMPORTANT: Load .env.local BEFORE any imports
+import * as dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
+
+// Now import after env is loaded
 import { db } from '@/lib/db';
 import { achievements, exercises } from '@/db/schema';
 import { nanoid } from 'nanoid';
