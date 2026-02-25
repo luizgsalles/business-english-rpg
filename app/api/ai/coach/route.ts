@@ -76,37 +76,14 @@ STUDENT DATA:
 
 ${!hasHistory ? 'Since the student has no history yet, give a welcoming onboarding analysis: suggest where to start, what skills to prioritise first for a Business English learner, and set encouraging expectations.' : 'Analyse the data and give specific, data-driven feedback.'}
 
-Return a JSON object with this exact structure:
-{
-  "overallAssessment": "2-3 sentence honest assessment of the student's current state and biggest opportunity",
-  "strengths": [
-    { "skill": "skill name", "insight": "why this is a strength and how to leverage it" }
-  ],
-  "weaknesses": [
-    { "skill": "skill name", "insight": "specific pattern of errors or gaps observed", "priority": "high|medium|low" }
-  ],
-  "recommendations": [
-    {
-      "title": "short action title",
-      "description": "specific actionable recommendation",
-      "exerciseType": "grammar|vocabulary|reading|writing|speaking",
-      "focusArea": "specific topic or pattern to focus on",
-      "why": "data-driven reason why this matters for this student"
-    }
-  ],
-  "nextSession": {
-    "suggestedTypes": ["type1", "type2"],
-    "suggestedDifficulty": "easy|medium|hard",
-    "focus": "one sentence describing what the next study session should focus on"
-  },
-  "motivationalNote": "one personalised sentence acknowledging progress and encouraging continuation"
-}
+Return ONLY a compact JSON object (no whitespace/newlines inside strings, keep values short):
+{"overallAssessment":"max 2 sentences","strengths":[{"skill":"name","insight":"max 15 words"}],"weaknesses":[{"skill":"name","insight":"max 15 words","priority":"high|medium|low"}],"recommendations":[{"title":"max 5 words","description":"max 20 words","exerciseType":"grammar|vocabulary|reading|writing|speaking","focusArea":"max 8 words","why":"max 15 words"}],"nextSession":{"suggestedTypes":["type1"],"suggestedDifficulty":"easy|medium|hard","focus":"max 15 words"},"motivationalNote":"max 20 words"}
 
-Return maximum 2 strengths, 3 weaknesses, and 3 recommendations. Be specific to THIS student's data — not generic advice.`;
+Max: 2 strengths, 2 weaknesses, 2 recommendations. Short values — this is a UI card, not an essay.`;
 
     const message = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 2048,
+      max_tokens: 4096,
       messages: [{ role: 'user', content: prompt }],
     });
 
