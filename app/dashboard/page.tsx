@@ -27,6 +27,7 @@ import {
   Play,
   ChevronRight,
 } from 'lucide-react';
+import { SignOutButton } from '@/components/SignOutButton';
 
 async function getUserStats(userId: string) {
   const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1);
@@ -113,10 +114,13 @@ export default async function DashboardPage() {
               Demo Mode
             </div>
           )}
-          <Link href="/exercises" className="btn-primary btn-sm">
-            <Play className="w-3.5 h-3.5" />
-            Start Learning
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link href="/exercises" className="btn-primary btn-sm">
+              <Play className="w-3.5 h-3.5" />
+              Start Learning
+            </Link>
+            <SignOutButton compact />
+          </div>
         </header>
 
         {/* Page content */}
