@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { getCurrentUser } from '@/lib/demo';
+import { SignOutButton } from '@/components/SignOutButton';
 
 export default async function SettingsPage() {
   const user = await getCurrentUser();
@@ -93,9 +94,7 @@ export default async function SettingsPage() {
         <div className="card">
           <h2 className="text-xl font-bold mb-2">Account</h2>
           <p className="text-gray-500 mb-4">Manage your account settings</p>
-          <Link href="/auth/signin" className="btn-outline">
-            Sign Out
-          </Link>
+          <SignOutButton />
         </div>
       </div>
     </div>
