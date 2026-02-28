@@ -2,7 +2,6 @@
 // Dashboard Page - Real data + new design system
 // ============================================================================
 
-import { redirect } from 'next/navigation';
 import { XPBar } from '@/components/dashboard/XPBar';
 import { SkillsRadarWithLabels } from '@/components/dashboard/SkillsRadar';
 import { StreakCounter } from '@/components/dashboard/StreakCounter';
@@ -14,7 +13,6 @@ import { db } from '@/lib/db';
 import { users, userProgress } from '@/db/schema';
 import { eq, and, gte, sql } from 'drizzle-orm';
 import { getXPProgress } from '@/lib/gamification/xp-system';
-import { Sidebar } from '@/components/ui/Sidebar';
 import { AICoach } from '@/components/dashboard/AICoach';
 import { MetricCard } from '@/components/ui/MetricCard';
 import { ChartCard } from '@/components/ui/ChartCard';
@@ -80,31 +78,15 @@ export default async function DashboardPage() {
   const user = await getCurrentUser();
   const isDemo = await isDemoMode();
 
-  if (!user) {
-    redirect('/auth/signin');
-  }
-
-  const stats = await getUserStats(user.id);
-  if (!stats) {
-    redirect('/auth/signin');
-  }
+  const stats = await getUserStats(user!.id);
+  if (!stats) return null;
 
   const { levelProgress, recentActivity, totals } = stats;
   const studyTimeMinutes = Math.round(totals.totalTimeSeconds / 60);
 
   return (
-    <div className="app-shell">
-      {/* Sidebar */}
-      <Sidebar
-        userName={user.name}
-        userImage={user.image}
-        userLevel={stats.user.overallLevel}
-        totalXP={stats.user.totalXP}
-      />
-
-      {/* Main content */}
-      <div className="main-content">
-        {/* Topbar */}
+    <>
+      {/* Topbar */}
         <header className="topbar">
           <div className="flex-1">
             <h1 className="text-lg font-semibold text-slate-900">Dashboard</h1>
@@ -288,7 +270,6 @@ export default async function DashboardPage() {
             </div>
           </div>
         </main>
-      </div>
-    </div>
+    </>
   );
 }
