@@ -8,7 +8,7 @@ import { StreakCounter } from '@/components/dashboard/StreakCounter';
 import { XPGrowthChart } from '@/components/dashboard/XPGrowthChart';
 import { AccuracyTrend } from '@/components/dashboard/AccuracyTrend';
 import Link from 'next/link';
-import { getCurrentUser, isDemoMode } from '@/lib/demo';
+import { getCurrentUser } from '@/lib/demo';
 import { db } from '@/lib/db';
 import { users, userProgress } from '@/db/schema';
 import { eq, and, gte, sql } from 'drizzle-orm';
@@ -76,8 +76,6 @@ async function getUserStats(userId: string) {
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
-  const isDemo = await isDemoMode();
-
   const stats = await getUserStats(user!.id);
   if (!stats) return null;
 
@@ -91,11 +89,6 @@ export default async function DashboardPage() {
           <div className="flex-1">
             <h1 className="text-lg font-semibold text-slate-900">Dashboard</h1>
           </div>
-          {isDemo && (
-            <div className="mr-4 px-3 py-1 bg-primary-50 text-primary-700 text-xs font-semibold rounded-full">
-              Demo Mode
-            </div>
-          )}
           <div className="flex items-center gap-3">
             <Link href="/exercises" className="btn-primary btn-sm">
               <Play className="w-3.5 h-3.5" />
@@ -107,18 +100,6 @@ export default async function DashboardPage() {
 
         {/* Page content */}
         <main className="page-content">
-          {/* Demo banner */}
-          {isDemo && (
-            <div className="mb-6 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-xl p-4 flex items-center justify-between">
-              <p className="text-sm font-medium">
-                Demo Mode — progresso salvo no banco de dados.
-              </p>
-              <Link href="/auth/signin" className="text-sm font-semibold underline underline-offset-2">
-                Criar conta gratuita
-              </Link>
-            </div>
-          )}
-
           {/* XP Progress */}
           <div className="bg-white rounded-xl border border-slate-100 shadow-card p-5 mb-5">
             <XPBar

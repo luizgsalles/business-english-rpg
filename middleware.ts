@@ -5,20 +5,10 @@ import { auth } from '@/auth';
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (pathname.startsWith('/demo')) {
-    return NextResponse.next();
-  }
-
-  const isDemoMode = request.cookies.get('demo-session')?.value === 'true';
-
-  const protectedPaths = ['/dashboard', '/exercise', '/profile', '/learn', '/daily-mix', '/achievements', '/settings'];
+  const protectedPaths = ['/dashboard', '/exercise', '/profile', '/learn', '/daily-mix', '/achievements', '/settings', '/exercises'];
   const isProtectedRoute = protectedPaths.some((path) => pathname.startsWith(path));
 
   if (isProtectedRoute) {
-    if (isDemoMode) {
-      return NextResponse.next();
-    }
-
     const session = await auth();
     if (!session?.user) {
       const signInUrl = new URL('/auth/signin', request.url);

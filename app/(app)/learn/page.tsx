@@ -4,22 +4,12 @@
 
 import { GRAMMAR_TOPICS, CATEGORIES, getTopicsByCategory } from '@/lib/content/grammar-topics';
 import { TopicCard } from '@/components/learn/TopicCard';
-import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
-import { isDemoMode } from '@/lib/demo';
-
 export const metadata = {
   title: 'Learn — Road to Fluency',
   description: 'Master English grammar and business vocabulary with structured theory and exercises.',
 };
 
 export default async function LearnPage() {
-  const session = await auth();
-  const isDemo = await isDemoMode();
-
-  if (!session?.user && !isDemo) {
-    redirect('/auth/signin');
-  }
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-8">

@@ -2,10 +2,8 @@
 // Topic Page — Theory + Practice
 // ============================================================================
 
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { auth } from '@/auth';
-import { isDemoMode } from '@/lib/demo';
 import { getTopicContent } from '@/lib/content/index';
 import { TheorySection } from '@/components/learn/TheorySection';
 import { ExercisesSection } from '@/components/learn/ExercisesSection';
@@ -32,13 +30,6 @@ export async function generateMetadata({ params }: TopicPageProps) {
 }
 
 export default async function TopicPage({ params }: TopicPageProps) {
-  const session = await auth();
-  const isDemo = await isDemoMode();
-
-  if (!session?.user && !isDemo) {
-    redirect('/auth/signin');
-  }
-
   const { slug } = await params;
   const topic = getTopicContent(slug);
 

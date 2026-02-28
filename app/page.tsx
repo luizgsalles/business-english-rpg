@@ -1,13 +1,11 @@
 import { redirect } from 'next/navigation';
 import { auth } from '@/auth';
 import Link from 'next/link';
-import { isDemoMode } from '@/lib/demo';
 
 export default async function HomePage() {
   const session = await auth();
-  const isDemo = await isDemoMode();
 
-  if (session?.user || isDemo) {
+  if (session?.user) {
     redirect('/dashboard');
   }
 
@@ -43,17 +41,17 @@ export default async function HomePage() {
         {/* Buttons */}
         <div className="flex gap-6 justify-center mb-16">
           <Link
-            href="/demo"
+            href="/auth/signup"
             className="px-10 py-5 bg-yellow-400 text-gray-900 rounded-2xl font-bold text-xl hover:bg-yellow-300 hover:scale-110 transition-all shadow-2xl"
           >
             Começar GRÁTIS
           </Link>
 
           <Link
-            href="/demo"
+            href="/auth/signin"
             className="px-10 py-5 bg-white/20 backdrop-blur text-white border-2 border-white/40 rounded-2xl font-bold text-xl hover:bg-white/30 hover:scale-110 transition-all"
           >
-            Ver Demo →
+            Já tenho conta →
           </Link>
         </div>
 
@@ -88,7 +86,6 @@ export default async function HomePage() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Feature 1 */}
             <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl p-8 text-white hover:scale-105 transition-transform shadow-2xl">
               <div className="text-6xl mb-4">⚡</div>
               <h3 className="text-3xl font-bold mb-4">Progressão Inteligente</h3>
@@ -97,7 +94,6 @@ export default async function HomePage() {
               </p>
             </div>
 
-            {/* Feature 2 */}
             <div className="bg-gradient-to-br from-pink-500 to-orange-500 rounded-3xl p-8 text-white hover:scale-105 transition-transform shadow-2xl">
               <div className="text-6xl mb-4">🤖</div>
               <h3 className="text-3xl font-bold mb-4">IA Claude</h3>
@@ -106,7 +102,6 @@ export default async function HomePage() {
               </p>
             </div>
 
-            {/* Feature 3 */}
             <div className="bg-gradient-to-br from-green-500 to-teal-600 rounded-3xl p-8 text-white hover:scale-105 transition-transform shadow-2xl">
               <div className="text-6xl mb-4">📊</div>
               <h3 className="text-3xl font-bold mb-4">Repetição Inteligente</h3>
@@ -164,7 +159,7 @@ export default async function HomePage() {
             Junte-se a milhares de profissionais melhorando seu inglês!
           </p>
           <Link
-            href="/demo"
+            href="/auth/signup"
             className="inline-block px-12 py-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-2xl font-bold text-2xl hover:scale-110 transition-transform shadow-2xl"
           >
             COMEÇAR AGORA GRÁTIS
